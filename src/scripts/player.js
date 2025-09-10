@@ -1,4 +1,5 @@
 import WaveSurfer from 'wavesurfer.js';
+
 const songChips = document.querySelectorAll("[data-song]");
 const songTextBlock = document.getElementById("category-text");
 const mainPlay = document.getElementById("mainPlay");
@@ -8,7 +9,7 @@ const volumeSlider = document.getElementById("volumeSlider");
 const volumeIcon = document.getElementById("volumeIcon");
 const audio = document.getElementById("audio");
 
-let currentSrc = "/src/songs/dontlookback.mp3";
+let currentSrc = "/songs/dontlookback.mp3";
 
 const waveformContainer = document.getElementById('waveform');
 const wavesurfer = WaveSurfer.create({
@@ -26,38 +27,43 @@ mainPlay?.addEventListener("click", () => {
     wavesurfer.playPause();
     if (wavesurfer.isPlaying()) {
         tt?.classList.add("is-playing");
-        icon.src = "/src/assets/pause.svg";
+        icon.src = "/images/pause.svg";
     } else {
         tt?.classList.remove("is-playing");
-        icon.src = "/src/assets/play.svg";
+        icon.src = "/images/play.svg";
     }
 });
 
 document.querySelectorAll(".playlist").forEach((item) => {
     const src = item.dataset.src;
     const songBtn = item.querySelector(".songPlay img");
+
     item.querySelector(".songPlay")?.addEventListener("click", () => {
         if (!src) return;
+
         if (src === currentSrc && !audio.paused) {
             audio.pause();
-            songBtn.src = "/src/assets/play.svg";
+            songBtn.src = "/images/play.svg";
             return;
         }
+
         if (src !== currentSrc) {
             audio.src = src;
             currentSrc = src;
         }
+
         document.querySelectorAll(".songPlay img").forEach((btnIcon) => {
-            btnIcon.src = "/src/assets/play.svg";
+            btnIcon.src = "/images/play.svg";
         });
+
         audio.play();
-        songBtn.src = "/src/assets/pause.svg";
+        songBtn.src = "/images/pause.svg";
     });
 });
 
 audio.addEventListener("ended", () => {
     document.querySelectorAll(".songPlay img").forEach((btnIcon) => {
-        btnIcon.src = "/src/assets/play.svg";
+        btnIcon.src = "/images/play.svg";
     });
 });
 
@@ -66,12 +72,13 @@ if (volumeSlider) {
         const value = e.target.value;
         wavesurfer.setVolume(value / 100);
         audio.volume = value / 100;
+
         if (value == 0) {
-            volumeIcon.src = "/src/assets/volume-mute-svgrepo-com.svg";
+            volumeIcon.src = "/images/volume-mute-svgrepo-com.svg";
         } else if (value < 60) {
-            volumeIcon.src = "/src/assets/volume-medium-svgrepo-com.svg";
+            volumeIcon.src = "/images/volume-medium-svgrepo-com.svg";
         } else {
-            volumeIcon.src = "/src/assets/volume-high-svgrepo-com.svg";
+            volumeIcon.src = "/images/volume-high-svgrepo-com.svg";
         }
     });
     volumeSlider.value = wavesurfer.getVolume() * 100;
