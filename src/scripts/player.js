@@ -1,5 +1,8 @@
 import WaveSurfer from 'wavesurfer.js';
 
+console.log("✅ player.js loaded");
+// your player code...
+
 const songChips = document.querySelectorAll("[data-song]");
 const songTextBlock = document.getElementById("category-text");
 const mainPlay = document.getElementById("mainPlay");
